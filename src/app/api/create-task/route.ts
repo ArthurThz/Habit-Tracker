@@ -12,6 +12,7 @@ export async function POST(request: Request) {
   try {
     const result =
       await sql`INSERT INTO tasks (name, user_id) VALUES (${taskName}, ${userId})`;
+
     return NextResponse.json({ success: true, data: result });
   } catch (err) {
     console.error(err);

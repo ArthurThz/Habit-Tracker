@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { LoaderCircle } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
@@ -27,15 +28,18 @@ const NewTaskForm = () => {
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    await fetch("/api/create-task", {
+    const response = await fetch("/api/create-task", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ taskName: values.name, userId: 1 }),
     });
-    toast.success("Task sucessfully created!");
-    form.reset();
+
+    if (response.ok) {
+      toast.success("Task sucessfully created!");
+      form.reset();
+    }
   };
   return (
     <div className="max-w-[350px] max-h-1/2 h-full mt-8">
@@ -63,7 +67,16 @@ const NewTaskForm = () => {
               </FormItem>
             )}
           ></FormField>
-          <Button className="bg-white hover:cursor-pointer">Confirm</Button>
+          <Button
+            disabled={form.formState.isSubmitting}
+            className="bg-white hover:cursor-pointer"
+          >
+            {form.formState.isSubmitting ? (
+              <LoaderCircle className="animate-spin" />
+            ) : (
+              "Confirm"
+            )}
+          </Button>
         </form>
       </Form>
     </div>
