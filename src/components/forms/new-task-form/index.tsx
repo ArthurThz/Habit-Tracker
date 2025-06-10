@@ -10,7 +10,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { createTask } from "@/lib/neon";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -28,9 +27,12 @@ const NewTaskForm = () => {
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    await createTask({
-      taskName: values.name,
-      userId: 1,
+    await fetch("/api/create-task", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ taskName: values.name, userId: 1 }),
     });
     toast.success("Task sucessfully created!");
     form.reset();
@@ -55,7 +57,7 @@ const NewTaskForm = () => {
                   <span className="text-green-500 font-medium font-quantico">
                     little reminder:{" "}
                   </span>{" "}
-                  new habits can take 60 days to be developed do not give up!
+                  {`New habits cant take 60 days to develop. Dont't give up!`}
                 </FormDescription>
                 <FormMessage />
               </FormItem>
