@@ -3,7 +3,7 @@ import { formatDate } from "@/lib/formatDate";
 import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
 
-const TaskPreview = ({ createdat, id, name, userId }: Tasks) => {
+const TaskPreview = ({ createdat, id, name }: Tasks) => {
   const navigate = useRouter();
 
   const handleNavigate = () => {
