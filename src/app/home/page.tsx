@@ -17,7 +17,7 @@ const HomePage = () => {
         cardImage="./improve.svg"
         contentDescription="Access your tasks and keep working"
         title="My Tasks"
-        linkTo="/new-task"
+        linkTo="/tasks"
       />
     </div>
   );
