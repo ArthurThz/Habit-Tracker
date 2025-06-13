@@ -1,10 +1,10 @@
 import { dbConnection } from "@/lib/neon";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function GET() {
+export async function GET(request: NextRequest) {
+  const id = request.nextUrl.pathname.split("/").pop();
   try {
-    const result = await dbConnection`SELECT * FROM tasks `;
-
+    const result = await dbConnection`SELECT * FROM tasks WHERE id = ${id} `;
     return NextResponse.json({ sucess: true, data: result }, { status: 200 });
   } catch (error) {
     console.error(error);

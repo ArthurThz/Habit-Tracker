@@ -1,17 +1,13 @@
-import { Tasks } from "@/types/tasks";
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 
-export const useTaskById = () => {
-  const [tasks, setTasks] = useState<Tasks[]>([]);
-  useEffect(() => {
-    const fetchTask = async () => {
-      const response = await fetch("/api/get-tasks");
+export const useTaskById = ({ id }: { id: number }) => {
+  return useQuery({
+    queryKey: ["taskById"],
+    queryFn: async () => {
+      const response = await fetch(`/api/tasks/${id}`);
       const data = await response.json();
-      setTasks(data.data);
-    };
 
-    fetchTask();
-  }, []);
-
-  return { tasks };
+      return data.data;
+    },
+  });
 };

@@ -10,6 +10,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useCreateTask } from "@/hooks/useCreateTask";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoaderCircle } from "lucide-react";
 import { useForm } from "react-hook-form";
@@ -27,19 +28,21 @@ const NewTaskForm = () => {
     },
   });
 
+  const createTask = useCreateTask();
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    const response = await fetch("/api/create-task", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ taskName: values.name, userId: 1 }),
-    });
-
-    if (response.ok) {
-      toast.success("Task sucessfully created!");
-      form.reset();
-    }
+    createTask.mutate(
+      { taskName: values.name, userId: 1 },
+      {
+        onSuccess: (data) => {
+          console.log("Task create Sucessfully", data);
+          toast.success("Task create sucessfully");
+          form.reset();
+        },
+        onError: (error) => {
+          toast.error(error.message);
+        },
+      }
+    );
   };
   return (
     <div className="max-w-[350px] max-h-1/2 h-full mt-8">
