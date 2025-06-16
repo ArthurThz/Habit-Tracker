@@ -7,6 +7,8 @@ import { useActivityDashboard } from "@/hooks/useActivityDashboard";
 const DashboardPage = () => {
   const { data: activities, isLoading } = useActivityDashboard({ userId: 1 });
 
+  console.log(activities);
+
   if (isLoading) return <Loader />;
   return (
     <div className="w-full h-screen flex flex-col items-center justify-center p-8">

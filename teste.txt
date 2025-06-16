@@ -1,0 +1,6 @@
+Insight	Exemplo SQL
+Tempo total por tarefa	SUM(finish_time - start_time)
+Tempo total por dia	GROUP BY DATE(start_time)
+Duração média por usuário	AVG(finish_time - start_time)
+Tarefa mais demorada	ORDER BY (finish_time - start_time) DESC
+Dias mais produtivos	COUNT(*) GROUP BY DATE(start_time)
