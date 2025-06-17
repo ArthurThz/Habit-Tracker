@@ -2,43 +2,54 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import type { NextAuthOptions } from "next-auth";
 import NextAuth from "next-auth";
 import { dbConnection } from "@/lib/neon";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 
-const authOptions: NextAuthOptions = {
+export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
       name: "Credentials",
       credentials: {
-        email: { label: "Email", type: "email", placeholder: "email" },
+        email: { label: "Email", type: "text" },
         password: { label: "Password", type: "password" },
       },
       authorize: async (credentials) => {
-        if (!credentials) return null;
+        if (!credentials) {
+          return null;
+        }
 
         const result =
-          await dbConnection`SELECT id, name, email, password_hash FROM users WHERE email = ${credentials.email}`;
+          await dbConnection`SELECT id, name, email, password FROM users WHERE email = ${credentials.email}`;
 
         const user = result[0];
 
-        if (!user) return null;
+        if (!user) {
+          return null;
+        }
 
         const passwordOk = await bcrypt.compare(
           credentials.password,
-          user.password_hash
+          user.password
         );
 
-        if (!passwordOk) return null;
+        if (!passwordOk) {
+          return null;
+        }
 
         return {
-          id: user.id,
+          id: String(user.id),
           name: user.name,
           email: user.email,
+          image: null,
         };
       },
     }),
   ],
   session: {
     strategy: "jwt",
+  },
+  pages: {
+    signIn: "/login",
+    error: "/login", // agora você vê o erro como query param
   },
 };
 const handler = NextAuth(authOptions);

@@ -1,3 +1,6 @@
+"use client";
+
+import LoginForm from "@/components/forms/login-form";
 import {
   Card,
   CardContent,
@@ -19,7 +22,9 @@ const Login = () => {
             Log in with your email and password to continue
           </CardDescription>
         </CardHeader>
-        <CardContent>{/* form */}</CardContent>
+        <CardContent>
+          <LoginForm />
+        </CardContent>
         <CardFooter>
           <p>
             Does not have an account? {""}

@@ -4,17 +4,20 @@ import {
   FormDescription,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
+  Form,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { LoaderCircle } from "lucide-react";
-import { Form, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import z from "zod";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import { toast } from "sonner";
+
+import { useSearchParams } from "next/navigation";
 
 const formSchema = z.object({
   email: z.string().min(2, { message: "email can't be empty" }).email(),
@@ -22,38 +25,62 @@ const formSchema = z.object({
 });
 
 const LoginForm = () => {
+  const error = useSearchParams().get("error");
+
+  useEffect(() => {
+    if (error === "CredentialsSignin") {
+      toast.error("Email ou senha inválidos");
+    }
+  }, [error]);
   const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
   });
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    console.log(values);
+
     const response = await signIn("credentials", {
       redirect: false,
       email: values.email,
       password: values.password,
     });
 
+    if (!response) {
+      toast.error("Something went wrong, try again");
+    }
+
+    if (response?.error) {
+      if (response.error === "CredentialsSignin") {
+        toast.error("Wrong email or password");
+      } else {
+        toast.error("Authentication error");
+      }
+      return;
+    }
+
     if (response?.ok) {
       router.push("/home");
-    } else {
-      toast.error("Invalid credentials");
     }
   };
+
   return (
-    <div className="max-w-1/3 w-auto h-auto p-4 flex flex-col items-center">
+    <div className=" w-auto h-auto p-4 flex flex-col items-center">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="border border-zinc-800 rounded-md p-4 flex flex-col gap-4 bg-zinc-900"
+          className="rounded-md p-4 flex flex-col gap-4 "
         >
           <FormField
             control={form.control}
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-lg">Email</FormLabel>
                 <FormControl>
-                  <Input placeholder="task name" {...field} />
+                  <Input placeholder="email" type="text" {...field} />
                 </FormControl>
 
                 <FormMessage />
@@ -65,9 +92,8 @@ const LoginForm = () => {
             name="password"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-lg">Create task</FormLabel>
                 <FormControl>
-                  <Input placeholder="task name" {...field} />
+                  <Input placeholder="password" type="password" {...field} />
                 </FormControl>
                 <FormDescription>
                   <span className="text-green-500 font-medium font-quantico">
