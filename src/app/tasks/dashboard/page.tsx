@@ -13,7 +13,7 @@ const DashboardPage = () => {
   if (isLoading) return <Loader />;
   return (
     <div className="w-full h-screen flex flex-col items-center justify-center p-8">
-      <div className="w-[70%] h-full ring-2 rounded-md ring-zinc-900 p-4">
+      <div className="w-[70%] h-full ring-2 rounded-md ring-zinc-800 p-4">
         <h1>Activities Dashboard</h1>
         <div className="w-full h-auto p-4 flex items-center justify-center gap-4">
           <CustomBadge
@@ -30,7 +30,7 @@ const DashboardPage = () => {
           <CustomBadge
             title="Longest Time Spent"
             icon={<ClockArrowUp size={18} />}
-            content={activities.longestTimeSpent.minutes}
+            content={`${activities.longestTimeSpent.minutes} minutes`}
           />
         </div>
       </div>
