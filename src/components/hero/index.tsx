@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
+import { signOut } from "next-auth/react";
 
 const HeroSection = () => {
   const navigate = useRouter();
@@ -23,7 +24,12 @@ const HeroSection = () => {
             >
               Access App
             </Button>
-            <Button variant="heroSecondary">Sign Up</Button>
+            <Button
+              variant="heroSecondary"
+              onClick={() => signOut({ callbackUrl: "/login" })}
+            >
+              Sign Up
+            </Button>
           </div>
         </div>
         <div className="">

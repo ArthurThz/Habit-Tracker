@@ -8,6 +8,7 @@ export async function GET(request: Request) {
   if (!session) {
     return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
   }
+
   const userId = session.user.id;
 
   try {
