@@ -1,6 +1,7 @@
 "use client";
 
 import ContentPreview from "@/components/content-preview";
+import { ChartNoAxesCombined, CirclePlus, LayoutList } from "lucide-react";
 
 const HomePage = () => {
   return (
@@ -11,13 +12,15 @@ const HomePage = () => {
         contentDescription="Add a new task to create a habit"
         title="New Task"
         linkTo="/tasks/new-task"
+        icon={<CirclePlus className="text-green-600" />}
       />
       <ContentPreview
         buttonLabel="My Tasks"
         cardImage="./my-tasks-preview.svg"
-        contentDescription="Access your tasks and keep working"
+        contentDescription="Access your tasks"
         title="My Tasks"
         linkTo="/tasks"
+        icon={<LayoutList className="text-green-600" />}
       />
       <ContentPreview
         buttonLabel="My activity"
@@ -25,6 +28,7 @@ const HomePage = () => {
         contentDescription="Get insights from your tasks"
         title="Activity Dashboard"
         linkTo="/tasks/dashboard"
+        icon={<ChartNoAxesCombined className="text-green-600" />}
       />
     </div>
   );

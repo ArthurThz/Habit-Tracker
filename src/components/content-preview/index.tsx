@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { Button } from "../ui/button";
 import Image from "next/image";
+import { ReactNode } from "react";
 
 type Props = {
   title: string;
@@ -10,6 +11,7 @@ type Props = {
   buttonLabel: string;
   cardImage: string;
   linkTo: string;
+  icon?: ReactNode;
 };
 const ContentPreview = ({
   buttonLabel,
@@ -17,6 +19,7 @@ const ContentPreview = ({
   contentDescription,
   title,
   linkTo,
+  icon,
 }: Props) => {
   const navigate = useRouter();
   const handleNavigate = () => {
@@ -28,9 +31,12 @@ const ContentPreview = ({
         {title}
       </h1>
       <div className="group flex h-full w-full flex-col gap-4 rounded-sm border border-zinc-700 bg-zinc-900 p-8 transition-all  ease-in-out hover:cursor-pointer hover:items-center hover:justify-center hover:bg-zinc-800">
-        <h3 className="ease text-lg font-medium text-zinc-300 transition-all  group-hover:hidden">
-          {contentDescription}
-        </h3>
+        <div className="w-full flex items-center gap-2  group-hover:hidden">
+          {icon}
+          <h3 className="ease text-lg font-medium text-zinc-300 transition-all ">
+            {contentDescription}
+          </h3>
+        </div>
         <Image
           src={cardImage}
           className="opacity-90 lg:group-hover:hidden"

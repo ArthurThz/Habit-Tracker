@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -20,21 +19,7 @@ const Login = () => {
             Log in with your email and password to continue
           </CardDescription>
         </CardHeader>
-        <CardContent>
-          <form className="flex flex-col gap-4">
-            <input
-              className="border-zinc-500 px-4 py-2 text-md w-full outline-none border rounded-md"
-              placeholder="Email"
-              type="text"
-            />
-            <input
-              className="border-zinc-500 px-4 py-2 text-md w-full outline-none border rounded-md"
-              placeholder="Password"
-              type="password"
-            />
-            <Button variant="login">Confirm</Button>
-          </form>
-        </CardContent>
+        <CardContent>{/* form */}</CardContent>
         <CardFooter>
           <p>
             Does not have an account? {""}
