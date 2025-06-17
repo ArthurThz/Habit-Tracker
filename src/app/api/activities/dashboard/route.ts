@@ -1,10 +1,14 @@
 import { NextResponse } from "next/server";
 import { dbConnection } from "@/lib/neon";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../../auth/[...nextauth]/route";
 
 export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url);
-
-  const userId = searchParams.get("userId");
+  const session = await getServerSession({ req: request, ...authOptions });
+  if (!session) {
+    return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
+  }
+  const userId = session.user.id;
 
   try {
     const totalResult =

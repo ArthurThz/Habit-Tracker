@@ -44,8 +44,25 @@ export const authOptions: NextAuthOptions = {
       },
     }),
   ],
+
   session: {
     strategy: "jwt",
+  },
+  callbacks: {
+    async jwt({ token, user }) {
+      // Quando o usuário faz login, o 'user' estará disponível
+      if (user) {
+        token.id = user.id; // adiciona id ao token JWT
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      // Adiciona o id do token no objeto session.user
+      if (token && session.user) {
+        session.user.id = token.id as string;
+      }
+      return session;
+    },
   },
   pages: {
     signIn: "/login",

@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button";
 import {
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormMessage,
@@ -32,6 +31,7 @@ const LoginForm = () => {
       toast.error("Email ou senha inválidos");
     }
   }, [error]);
+
   const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -95,12 +95,7 @@ const LoginForm = () => {
                 <FormControl>
                   <Input placeholder="password" type="password" {...field} />
                 </FormControl>
-                <FormDescription>
-                  <span className="text-green-500 font-medium font-quantico">
-                    little reminder:{" "}
-                  </span>{" "}
-                  {`New habits cant take 60 days to develop. Dont't give up!`}
-                </FormDescription>
+
                 <FormMessage />
               </FormItem>
             )}
