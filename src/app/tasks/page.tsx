@@ -2,7 +2,7 @@
 import Loader from "@/components/loader";
 import PreviousPageButton from "@/components/previous-page-button";
 import TaskPreview from "@/components/task-preview";
-import { useTasks } from "@/hooks/useTasks";
+import { useTasks } from "@/hooks/react-query/useTasks";
 import { Tasks } from "@/types/tasks";
 
 const MyTasksPage = () => {

@@ -1,7 +1,7 @@
 import CredentialsProvider from "next-auth/providers/credentials";
 import type { NextAuthOptions } from "next-auth";
 import NextAuth from "next-auth";
-import { dbConnection } from "@/lib/neon";
+import { dbConnection } from "@/lib/db/neon";
 import bcrypt from "bcryptjs";
 
 export const authOptions: NextAuthOptions = {

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { useCreateActivity } from "./useCreateActivity";
+import { useCreateActivity } from "./react-query/useCreateActivity";
 import { toast } from "sonner";
 
 type Task = {

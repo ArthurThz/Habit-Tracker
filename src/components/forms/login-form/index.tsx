@@ -47,9 +47,6 @@ const LoginForm = () => {
     if (response?.error) {
       if (response.error === "CredentialsSignin") {
         setResponseError("Wrong email or password");
-        // toast.error("Wrong email or password", {
-        //   position: "top-center",
-        // });
       } else {
         toast.error("Authentication error");
       }
@@ -110,6 +107,15 @@ const LoginForm = () => {
             )}
           </Button>
         </form>
+        <p className="font-quantico">
+          {`Don't have an account? `}
+          <span
+            onClick={() => router.push("/auth/signup")}
+            className="underline underline-offset-2 text-green-500 font-bold hover:cursor-pointer"
+          >
+            Sign Up
+          </span>
+        </p>
       </Form>
     </FormContainer>
   );

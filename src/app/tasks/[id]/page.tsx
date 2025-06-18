@@ -3,7 +3,7 @@ import Loader from "@/components/loader";
 import PreviousPageButton from "@/components/previous-page-button";
 import Timer from "@/components/timer";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import { useTaskById } from "@/hooks/useTaskById";
+import { useTaskById } from "@/hooks/react-query/useTaskById";
 import { Tasks } from "@/types/tasks";
 import { Atom, Calendar } from "lucide-react";
 import { useParams } from "next/navigation";

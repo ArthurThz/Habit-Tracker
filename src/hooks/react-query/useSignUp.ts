@@ -16,11 +16,12 @@ export const useSignUp = () => {
         body: JSON.stringify(newUser),
       });
 
+      const data = await response.json();
+
       if (!response.ok) {
-        throw new Error("An error occurred during sign up");
+        throw new Error(data.message || "Sign Up Failed");
       }
 
-      const data = await response.json();
       return data.data;
     },
   });

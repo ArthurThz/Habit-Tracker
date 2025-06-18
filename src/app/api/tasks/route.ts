@@ -1,4 +1,4 @@
-import { dbConnection } from "@/lib/neon";
+import { dbConnection } from "@/lib/db/neon";
 import { NextResponse } from "next/server";
 
 export async function GET() {

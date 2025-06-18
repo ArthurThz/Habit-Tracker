@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { dbConnection } from "@/lib/neon";
+import { dbConnection } from "@/lib/db/neon";
 
 export async function POST(request: Request) {
   const body = await request.json();

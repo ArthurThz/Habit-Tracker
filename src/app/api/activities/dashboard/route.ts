@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { dbConnection } from "@/lib/neon";
+import { dbConnection } from "@/lib/db/neon";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../../auth/[...nextauth]/route";
 

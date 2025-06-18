@@ -2,7 +2,7 @@
 
 import CustomBadge from "@/components/custom-badge";
 import Loader from "@/components/loader";
-import { useActivityDashboard } from "@/hooks/useActivityDashboard";
+import { useActivityDashboard } from "@/hooks/react-query/useActivityDashboard";
 import { CircleCheckBig, ClockArrowUp, ListCheck } from "lucide-react";
 
 const DashboardPage = () => {

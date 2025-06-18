@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { dbConnection } from "@/lib/neon";
+import { dbConnection } from "@/lib/db/neon";
 import bcrypt from "bcryptjs";
 
 export async function POST(request: Request) {
@@ -15,8 +15,8 @@ export async function POST(request: Request) {
 
     if (userExists.length > 0) {
       return NextResponse.json(
-        { sucess: true, message: "User already exists" },
-        { status: 200 }
+        { sucess: false, message: "This user already exists, try to log in" },
+        { status: 409 }
       );
     }
 
