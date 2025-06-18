@@ -20,13 +20,13 @@ const HeroSection = () => {
           <div className="flex gap-4 justify-center lg:justify-start">
             <Button
               variant="heroPrimary"
-              onClick={() => navigate.push("/home")}
+              onClick={() => navigate.push("/auth/login")}
             >
               Access App
             </Button>
             <Button
               variant="heroSecondary"
-              onClick={() => signOut({ callbackUrl: "/login" })}
+              onClick={() => signOut({ callbackUrl: "/auth/signin" })}
             >
               Sign Up
             </Button>

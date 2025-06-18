@@ -70,7 +70,7 @@ const LoginForm = () => {
     <div className=" w-auto max-w-[400px] h-auto p-4 flex flex-col items-center gap-4">
       <div className="w-full h-auto rounded-lg flex items-center justify-center">
         <Image
-          src="login-image.svg"
+          src="../login-image.svg"
           alt="login image"
           width={250}
           height={250}
