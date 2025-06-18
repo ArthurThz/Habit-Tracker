@@ -26,7 +26,7 @@ const HeroSection = () => {
             </Button>
             <Button
               variant="heroSecondary"
-              onClick={() => signOut({ callbackUrl: "/auth/signin" })}
+              onClick={() => signOut({ callbackUrl: "/auth/signup" })}
             >
               Sign Up
             </Button>

@@ -13,11 +13,10 @@ import { useForm } from "react-hook-form";
 import z from "zod";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 import { toast } from "sonner";
 
-import { useSearchParams } from "next/navigation";
-import Image from "next/image";
+import { useState } from "react";
+import FormContainer from "../form-container";
 
 const formSchema = z.object({
   email: z.string().min(2, { message: "email can't be empty" }).email(),
@@ -25,14 +24,7 @@ const formSchema = z.object({
 });
 
 const LoginForm = () => {
-  const error = useSearchParams().get("error");
-
-  useEffect(() => {
-    if (error === "CredentialsSignin") {
-      toast.error("Email ou senha inválidos");
-    }
-  }, [error]);
-
+  const [responseError, setResponseError] = useState<string | null>(null);
   const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -54,7 +46,10 @@ const LoginForm = () => {
 
     if (response?.error) {
       if (response.error === "CredentialsSignin") {
-        toast.error("Wrong email or password");
+        setResponseError("Wrong email or password");
+        // toast.error("Wrong email or password", {
+        //   position: "top-center",
+        // });
       } else {
         toast.error("Authentication error");
       }
@@ -67,21 +62,12 @@ const LoginForm = () => {
   };
 
   return (
-    <div className=" w-auto max-w-[400px] h-auto p-4 flex flex-col items-center gap-4">
-      <div className="w-full h-auto rounded-lg flex items-center justify-center">
-        <Image
-          src="../login-image.svg"
-          alt="login image"
-          width={250}
-          height={250}
-        />
-      </div>
-      <div className="flex flex-col gap-2">
-        <h1 className="text-3xl font-medium font-quantico">Habit Tracker</h1>
-        <p className="font-semibold text-sm text-neutral-300">
-          Log in with your email and password to continue
-        </p>
-      </div>
+    <FormContainer
+      title="Habit Tracker App"
+      subtitle="Log in with your email and password to continue"
+      image="../login-image.svg"
+      errorMessage={responseError}
+    >
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
@@ -125,7 +111,7 @@ const LoginForm = () => {
           </Button>
         </form>
       </Form>
-    </div>
+    </FormContainer>
   );
 };
 
