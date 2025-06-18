@@ -39,7 +39,7 @@ const ContentPreview = ({
         </div>
         <Image
           src={cardImage}
-          className="opacity-90 lg:group-hover:hidden"
+          className="opacity-90 lg:group-hover:hidden self-center lg:self-start"
           alt="image preview"
           width={400}
           height={200}

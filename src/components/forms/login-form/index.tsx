@@ -17,6 +17,7 @@ import { useEffect } from "react";
 import { toast } from "sonner";
 
 import { useSearchParams } from "next/navigation";
+import Image from "next/image";
 
 const formSchema = z.object({
   email: z.string().min(2, { message: "email can't be empty" }).email(),
@@ -41,8 +42,6 @@ const LoginForm = () => {
     },
   });
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log(values);
-
     const response = await signIn("credentials", {
       redirect: false,
       email: values.email,
@@ -68,11 +67,25 @@ const LoginForm = () => {
   };
 
   return (
-    <div className=" w-auto h-auto p-4 flex flex-col items-center">
+    <div className=" w-auto max-w-[400px] h-auto p-4 flex flex-col items-center gap-4">
+      <div className="w-full h-auto rounded-lg flex items-center justify-center">
+        <Image
+          src="login-image.svg"
+          alt="login image"
+          width={250}
+          height={250}
+        />
+      </div>
+      <div className="flex flex-col gap-2">
+        <h1 className="text-3xl font-medium font-quantico">Habit Tracker</h1>
+        <p className="font-semibold text-sm text-neutral-300">
+          Log in with your email and password to continue
+        </p>
+      </div>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="rounded-md p-4 flex flex-col gap-4 "
+          className="rounded-md flex flex-col gap-4 w-full"
         >
           <FormField
             control={form.control}
