@@ -9,12 +9,15 @@ import { useQueryClient } from "@tanstack/react-query";
 
 const TaskPreview = ({ createdat, id, name }: Tasks) => {
   const navigate = useRouter();
+
   const deleteTask = useDeleteTask();
+
   const handleNavigate = () => {
     navigate.push(`/tasks/${id}`);
   };
 
   const queryClient = useQueryClient();
+
   const handleDeleteTask = () => {
     deleteTask.mutate(String(id), {
       onSuccess: () => {
@@ -27,6 +30,7 @@ const TaskPreview = ({ createdat, id, name }: Tasks) => {
           }
         );
         queryClient.invalidateQueries({ queryKey: ["tasks"] });
+        toast.success("Task removed");
       },
       onError: () => {
         toast.error("Can't delete the task");
