@@ -25,9 +25,9 @@ const DashboardPage = () => {
 
   if (isLoading) return <Loader />;
   return (
-    <div className="w-full min-h-screen h-auto flex flex-col items-center justify-center p-8 pt-44">
-      <div className="w-[70%] min-h-[90vh] h-auto rounded-md  p-4">
-        <div className="w-full max-h-1/5 h-auto p-4 flex items-center justify-center gap-4">
+    <div className="w-full min-h-screen h-auto flex flex-col items-center justify-center p-0 lg:p-8 pt-20 lg:pt-44">
+      <div className="w-full lg:w-[70%] min-h-[90vh] h-auto rounded-md  p-4 lg:p-12">
+        <div className="w-full flex-col lg:flex-row max-h-1/5 h-auto p-4 flex items-center justify-center gap-4">
           <CustomBadge
             title="Last Activity"
             icon={<ListCheck size={18} />}
@@ -45,7 +45,7 @@ const DashboardPage = () => {
             content={`${activities?.longestTimeSpent.minutes} minutes`}
           />
         </div>
-        <div className="w-full h-full p-4 flex flex-col gap-12">
+        <div className="w-full h-full p-8 flex flex-col gap-12">
           <TasksHistoryChart history={activities?.history ?? []} />
           <TasksConcludedByMonthCharts data={activitiesConcludedByMonthData} />
         </div>

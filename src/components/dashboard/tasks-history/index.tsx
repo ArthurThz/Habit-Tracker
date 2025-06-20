@@ -1,6 +1,6 @@
 "use client";
 
-import { Area, AreaChart, CartesianGrid, XAxis } from "recharts";
+import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts";
 
 import {
   Card,
@@ -221,6 +221,7 @@ const TasksHistoryChart = ({ history }: Props) => {
                   });
                 }}
               />
+              <YAxis />
               <ChartTooltip
                 cursor={false}
                 content={
@@ -231,7 +232,7 @@ const TasksHistoryChart = ({ history }: Props) => {
                         day: "numeric",
                       });
                     }}
-                    indicator="dot"
+                    indicator="line"
                   />
                 }
               />

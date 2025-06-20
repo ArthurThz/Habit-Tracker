@@ -38,15 +38,15 @@ export async function GET(request: Request) {
       ORDER BY EXTRACT(MONTH FROM start_time)`;
 
     const tasksHistory = await dbConnection`SELECT
-  DATE_TRUNC('day', start_time AT TIME ZONE 'UTC') AS date,
-  COUNT(*) AS quantity
-FROM activities
-WHERE user_id = ${userId}
-GROUP BY date
-ORDER BY date`;
+      DATE_TRUNC('day', start_time AT TIME ZONE 'UTC') AS date,
+      COUNT(*) AS quantity
+      FROM activities
+      WHERE user_id = ${userId}
+      GROUP BY date
+      ORDER BY date`;
 
     const historyFormatted = tasksHistory.map((item) => ({
-      date: new Date(item.date),
+      date: new Date(item.date).toISOString(),
       quantity: Number(item.quantity),
     }));
     const secondsToMinutes = Math.floor(
@@ -64,10 +64,7 @@ ORDER BY date`;
         hours: secondsToHours,
       },
       activitiesConcludedByMonth: activitiesConcludedByMonth,
-      history: historyFormatted.map((entry) => ({
-        date: entry.date.toISOString(), // ← transforma Date em string ISO
-        quantity: entry.quantity,
-      })),
+      history: historyFormatted,
     };
 
     const parsedData = activityDashboardDataSchema.parse(rawData);
