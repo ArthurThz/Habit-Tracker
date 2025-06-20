@@ -123,8 +123,8 @@ export const description = "An interactive area chart";
 // ];
 
 const chartConfig = {
-  visitors: {
-    label: "Visitors",
+  date: {
+    label: "Date",
   },
   quantity: {
     label: "Quantity",
@@ -135,7 +135,7 @@ const chartConfig = {
 type Props = {
   history: {
     date: string;
-    quantity: string;
+    quantity: number;
   }[];
 };
 
@@ -144,7 +144,7 @@ const TasksHistoryChart = ({ history }: Props) => {
 
   const filteredData = history.filter((item) => {
     const date = new Date(item.date);
-    const referenceDate = new Date("2024-06-30");
+    const referenceDate = new Date();
     let daysToSubtract = 90;
     if (timeRange === "30d") {
       daysToSubtract = 30;

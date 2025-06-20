@@ -21,7 +21,7 @@ export const activityDashboardDataSchema = z.object({
   history: z.array(
     z.object({
       date: z.string(),
-      quantity: z.string(),
+      quantity: z.number(),
     })
   ),
 });

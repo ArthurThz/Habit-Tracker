@@ -11,7 +11,7 @@ import { CircleCheckBig, ClockArrowUp, ListCheck } from "lucide-react";
 const DashboardPage = () => {
   const { data: activities, isLoading } = useActivityDashboard({ userId: 1 });
 
-  console.log(activities);
+  console.log("ACTIVITIES", activities);
 
   const rawActivitiesConcludedByMonth =
     activities?.activitiesConcludedByMonth ?? [];
@@ -50,7 +50,6 @@ const DashboardPage = () => {
           <TasksConcludedByMonthCharts data={activitiesConcludedByMonthData} />
         </div>
       </div>
-      s
     </div>
   );
 };
