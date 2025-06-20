@@ -7,7 +7,7 @@ import { signOut } from "next-auth/react";
 
 const HomePage = () => {
   return (
-    <div className="min-h-screen h-full w-full flex flex-col px-2 py-4 items-center lg:justify-center lg:flex-row">
+    <div className="min-h-screen h-full w-full flex flex-col px-2 py-4 items-center lg:justify-center lg:flex-row pt-10 lg:pt-0">
       <Button onClick={() => signOut({ callbackUrl: "/" })}>Log Out</Button>
       <ContentPreview
         buttonLabel="Add New"

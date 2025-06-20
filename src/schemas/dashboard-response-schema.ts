@@ -1,9 +1,28 @@
 import { z } from "zod";
 
-export const activitySchema = z.object({
-  taskId: z.number(),
-  userId: z.number(),
-  finishTime: z.string().datetime(),
-  startTime: z.string().datetime(),
-  id: z.number(),
+export const activityDashboardDataSchema = z.object({
+  total: z.number(),
+  lastActivity: z
+    .object({
+      name: z.string(),
+    })
+    .nullable(),
+  longestTimeSpent: z.object({
+    name: z.string(),
+    minutes: z.number(),
+    hours: z.number(),
+  }),
+  activitiesConcludedByMonth: z.array(
+    z.object({
+      month: z.string(),
+      tasks: z.union([z.string(), z.number()]),
+    })
+  ),
+  history: z.array(
+    z.object({
+      date: z.string(),
+      quantity: z.string(),
+    })
+  ),
 });
+export type DashboardResponse = z.infer<typeof activityDashboardDataSchema>;

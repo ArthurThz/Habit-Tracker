@@ -3,7 +3,7 @@ import { ReactNode } from "react";
 
 type Props = {
   title: string;
-  content: string;
+  content?: string | number;
   icon?: ReactNode;
 };
 const CustomBadge = ({ content, title, icon }: Props) => {

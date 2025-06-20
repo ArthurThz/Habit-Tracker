@@ -6,6 +6,7 @@ import ReactQueryProvider from "@/components/react-query-provider";
 import NextAuthProvider from "@/components/next-auth-provider";
 import { getServerSession } from "next-auth";
 import { authOptions } from "./api/auth/[...nextauth]/route";
+import Header from "@/components/header";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -40,6 +41,7 @@ export default async function RootLayout({
         className={`dark ${geistSans.variable} ${geistMono.variable} ${quantico.variable} antialiased`}
       >
         <NextAuthProvider session={session}>
+          <Header />
           <ReactQueryProvider>{children}</ReactQueryProvider>
 
           <Toaster />
