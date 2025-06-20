@@ -27,7 +27,7 @@ const buttonVariants = cva(
         login:
           "bg-zinc-50 shadow-xs shadow-zinc-100 hover:cursor-pointer text-zinc-900 hover:opacity-90",
         contentPreview:
-          "hidden bg-primary text-primary-foreground shadow-xs hover:bg-primary/80 group-hover:inline-flex group-hover:cursor-pointer",
+          "lg:hidden inline-flex bg-primary text-primary-foreground shadow-xs hover:bg-primary/80 lg:group-hover:inline-flex group-hover:cursor-pointer",
       },
       size: {
         default: "h-9 px-4 py-2 has-[>svg]:px-3",
