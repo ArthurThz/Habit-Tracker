@@ -24,5 +24,11 @@ export const activityDashboardDataSchema = z.object({
       quantity: z.number(),
     })
   ),
+  frequentTasksByName: z.array(
+    z.object({
+      name: z.string(),
+      count: z.number(),
+    })
+  ),
 });
 export type DashboardResponse = z.infer<typeof activityDashboardDataSchema>;

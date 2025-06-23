@@ -1,9 +1,17 @@
 "use client";
 
 import CustomBadge from "@/components/custom-badge";
+import MostFrequentTasksByName from "@/components/dashboard/most-frequent-tasks-by-name-charts";
 import TasksConcludedByMonthCharts from "@/components/dashboard/tasks-conclued-by-month";
 import TasksHistoryChart from "@/components/dashboard/tasks-history";
 import Loader from "@/components/loader";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 import { useActivityDashboard } from "@/hooks/react-query/useActivityDashboard";
 import { CircleCheckBig, ClockArrowUp, ListCheck } from "lucide-react";
@@ -48,6 +56,24 @@ const DashboardPage = () => {
         <div className="w-full h-full p-8 flex flex-col gap-12">
           <TasksHistoryChart history={activities?.history ?? []} />
           <TasksConcludedByMonthCharts data={activitiesConcludedByMonthData} />
+          <div className="w-full h-auto flex gap-4">
+            <MostFrequentTasksByName
+              tasks={activities?.frequentTasksByName ?? []}
+            />
+            <Card className="w-1/2">
+              <CardHeader>
+                <CardTitle>Average Time</CardTitle>
+                <CardDescription>
+                  Your average time spent in tasks
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="flex flex-col gap-4 h-full p-10">
+                <div className="w-full h-full  flex items-center justify-center">
+                  <span className="text-6xl">0.5 hours</span>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
         </div>
       </div>
     </div>
