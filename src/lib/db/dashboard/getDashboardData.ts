@@ -1,4 +1,4 @@
-import { dbConnection } from "./neon";
+import { dbConnection } from "../neon";
 
 export const getDashboarData = async ({ userId }: { userId: string }) => {
   const totalResult =
@@ -17,6 +17,12 @@ export const getDashboarData = async ({ userId }: { userId: string }) => {
       ORDER BY timespent_seconds DESC
       LIMIT 1;`;
 
+  const secondsToMinutes = Math.floor(
+    longestTimeSpent[0].timespent_seconds / 60
+  );
+
+  const secondsToHours = longestTimeSpent[0].timespent_seconds / 3600;
+
   const activitiesConcludedByMonth = await dbConnection`SELECT
       TO_CHAR(start_time, 'FMMonth') AS month,
       COUNT(*) AS tasks
@@ -25,6 +31,13 @@ export const getDashboarData = async ({ userId }: { userId: string }) => {
       GROUP BY TO_CHAR(start_time, 'FMMonth'), EXTRACT(MONTH FROM start_time)
       ORDER BY EXTRACT(MONTH FROM start_time)`;
 
+  const formatedActivitiesConcludedByMonth = activitiesConcludedByMonth.map(
+    (item) => ({
+      ...item,
+      tasks: Number(item.tasks),
+    })
+  );
+
   const tasksHistory = await dbConnection`SELECT
       DATE_TRUNC('day', start_time AT TIME ZONE 'UTC') AS date,
       COUNT(*) AS quantity
@@ -32,6 +45,11 @@ export const getDashboarData = async ({ userId }: { userId: string }) => {
       WHERE user_id = ${userId}
       GROUP BY date
       ORDER BY date`;
+
+  const historyFormatted = tasksHistory.map((item) => ({
+    date: new Date(item.date).toISOString(),
+    quantity: Number(item.quantity),
+  }));
 
   const frequentTasksByName = await dbConnection`
       SELECT tasks.name, COUNT(*) AS count
@@ -48,15 +66,17 @@ export const getDashboarData = async ({ userId }: { userId: string }) => {
     count: Number(item.count),
   }));
 
-  const historyFormatted = tasksHistory.map((item) => ({
-    date: new Date(item.date).toISOString(),
-    quantity: Number(item.quantity),
-  }));
-  const secondsToMinutes = Math.floor(
-    longestTimeSpent[0].timespent_seconds / 60
-  );
+  const averageTaskDuration = await dbConnection`
+      SELECT 
+      AVG(EXTRACT(EPOCH FROM (finish_time - start_time))) AS avg_time_seconds
+      FROM activities
+      WHERE user_id = ${userId}`;
 
-  const secondsToHours = longestTimeSpent[0].timespent_seconds / 3600;
+  const formatedAverageTaskDuration = {
+    avgTaskDuration: Math.floor(
+      Number(averageTaskDuration[0].avg_time_seconds) / 60
+    ),
+  };
 
   return {
     total: Number(totalResult[0].count),
@@ -66,8 +86,9 @@ export const getDashboarData = async ({ userId }: { userId: string }) => {
       minutes: secondsToMinutes,
       hours: secondsToHours,
     },
-    activitiesConcludedByMonth: activitiesConcludedByMonth,
+    activitiesConcludedByMonth: formatedActivitiesConcludedByMonth,
     history: historyFormatted,
     frequentTasksByName: frequentTasksByNameFormated,
+    averageTaskDuration: formatedAverageTaskDuration,
   };
 };

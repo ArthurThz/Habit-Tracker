@@ -14,26 +14,19 @@ import {
 } from "@/components/ui/card";
 
 import { useActivityDashboard } from "@/hooks/react-query/useActivityDashboard";
-import { CircleCheckBig, ClockArrowUp, ListCheck } from "lucide-react";
+import { CircleCheckBig, ClockArrowUp, ListCheck, Timer } from "lucide-react";
+import { useSession } from "next-auth/react";
 
 const DashboardPage = () => {
-  const { data: activities, isLoading } = useActivityDashboard({ userId: 1 });
-
-  console.log("ACTIVITIES", activities);
-
-  const rawActivitiesConcludedByMonth =
-    activities?.activitiesConcludedByMonth ?? [];
-
-  const activitiesConcludedByMonthData = rawActivitiesConcludedByMonth.map(
-    (item: { month: string; tasks: string | number }) => ({
-      ...item,
-      tasks: Number(item.tasks),
-    })
-  );
+  const session = useSession();
+  const { data: activities, isLoading } = useActivityDashboard({
+    userId: Number(session.data?.user.id),
+  });
 
   if (isLoading) return <Loader />;
   return (
     <div className="w-full min-h-screen h-auto flex flex-col items-center justify-center p-0 lg:p-8 pt-20 lg:pt-44">
+      <h1 className="text-4xl font-quantico">Activity Dashboard</h1>
       <div className="w-full lg:w-[70%] min-h-[90vh] h-auto rounded-md  p-4 lg:p-12">
         <div className="w-full flex-col lg:flex-row max-h-1/5 h-auto p-4 flex items-center justify-center gap-4">
           <CustomBadge
@@ -55,7 +48,9 @@ const DashboardPage = () => {
         </div>
         <div className="w-full h-full p-8 flex flex-col gap-12">
           <TasksHistoryChart history={activities?.history ?? []} />
-          <TasksConcludedByMonthCharts data={activitiesConcludedByMonthData} />
+          <TasksConcludedByMonthCharts
+            data={activities?.activitiesConcludedByMonth ?? []}
+          />
           <div className="w-full h-auto flex gap-4">
             <MostFrequentTasksByName
               tasks={activities?.frequentTasksByName ?? []}
@@ -64,12 +59,15 @@ const DashboardPage = () => {
               <CardHeader>
                 <CardTitle>Average Time</CardTitle>
                 <CardDescription>
-                  Your average time spent in tasks
+                  Your average time spent doing tasks
                 </CardDescription>
               </CardHeader>
               <CardContent className="flex flex-col gap-4 h-full p-10">
                 <div className="w-full h-full  flex items-center justify-center">
-                  <span className="text-6xl">0.5 hours</span>
+                  <span className="text-6xl flex gap-4 items-center">
+                    <Timer className="w-[60px] h-[60px] text-green-500" />
+                    {`${activities?.averageTaskDuration.avgTaskDuration} minutes`}
+                  </span>
                 </div>
               </CardContent>
             </Card>
