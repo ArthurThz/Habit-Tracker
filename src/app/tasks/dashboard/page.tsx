@@ -5,6 +5,7 @@ import MostFrequentTasksByName from "@/components/dashboard/most-frequent-tasks-
 import TasksConcludedByMonthCharts from "@/components/dashboard/tasks-conclued-by-month";
 import TasksHistoryChart from "@/components/dashboard/tasks-history";
 import Loader from "@/components/loader";
+import NavigateButton from "@/components/navigate-button";
 import {
   Card,
   CardContent,
@@ -37,7 +38,8 @@ const DashboardPage = () => {
 
   return (
     <div className="w-full min-h-screen h-auto flex flex-col items-center justify-center p-0 lg:p-8 pt-20 lg:pt-44">
-      <h1 className="text-4xl font-quantico">Activity Dashboard</h1>
+      <NavigateButton label="Home" path="/home" />
+      <h1 className="text-4xl font-quantico mt-4">Activity Dashboard</h1>
       {userName && (
         <h3 className="text-lg mt-4 font-quantico">
           Hello <span className="text-green-500">{userName}</span>, take a look

@@ -7,6 +7,7 @@ import NextAuthProvider from "@/components/next-auth-provider";
 import { getServerSession } from "next-auth";
 import { authOptions } from "./api/auth/[...nextauth]/route";
 import Header from "@/components/header";
+import AppContainer from "@/components/app-container";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -42,7 +43,9 @@ export default async function RootLayout({
       >
         <NextAuthProvider session={session}>
           <Header />
-          <ReactQueryProvider>{children}</ReactQueryProvider>
+          <ReactQueryProvider>
+            <AppContainer>{children}</AppContainer>
+          </ReactQueryProvider>
 
           <Toaster />
         </NextAuthProvider>

@@ -14,7 +14,7 @@ const MyTasksContainer = ({ tasks }: MyTasks) => {
     <div className="w-full flex flex-col justify-center  items-center gap-4">
       <h1 className="font-quantico text-4xl">My Tasks</h1>
       <Input
-        className="w-[350px]"
+        className="lg:w-[350px] w-[92%]"
         placeholder="search task"
         onChange={handleSearchTask}
       />
