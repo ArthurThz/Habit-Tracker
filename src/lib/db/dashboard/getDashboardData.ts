@@ -17,11 +17,13 @@ export const getDashboarData = async ({ userId }: { userId: string }) => {
       ORDER BY timespent_seconds DESC
       LIMIT 1;`;
 
-  const secondsToMinutes = Math.floor(
-    longestTimeSpent[0].timespent_seconds / 60
-  );
+  const longest = longestTimeSpent?.[0];
 
-  const secondsToHours = longestTimeSpent[0].timespent_seconds / 3600;
+  const secondsToMinutes = longest
+    ? Math.floor(longest.timespent_seconds / 60)
+    : 0;
+
+  const secondsToHours = longest ? longest.timespent_seconds / 3600 : 0;
 
   const activitiesConcludedByMonth = await dbConnection`SELECT
       TO_CHAR(start_time, 'FMMonth') AS month,
@@ -81,11 +83,17 @@ export const getDashboarData = async ({ userId }: { userId: string }) => {
   return {
     total: Number(totalResult[0].count),
     lastActivity: lastActivityResult[0] ?? null,
-    longestTimeSpent: {
-      name: longestTimeSpent[0].name,
-      minutes: secondsToMinutes,
-      hours: secondsToHours,
-    },
+    longestTimeSpent: longest
+      ? {
+          name: longestTimeSpent[0].name,
+          minutes: secondsToMinutes,
+          hours: secondsToHours,
+        }
+      : {
+          name: "",
+          minutes: 0,
+          hours: 0,
+        },
     activitiesConcludedByMonth: formatedActivitiesConcludedByMonth,
     history: historyFormatted,
     frequentTasksByName: frequentTasksByNameFormated,

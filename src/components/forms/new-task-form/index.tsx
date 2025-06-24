@@ -31,7 +31,7 @@ const NewTaskForm = () => {
   const createTask = useCreateTask();
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     createTask.mutate(
-      { taskName: values.name, userId: 1 },
+      { taskName: values.name },
       {
         onSuccess: (data) => {
           console.log("Task create Sucessfully", data);
