@@ -18,19 +18,7 @@ const MyTasksContainer = ({ tasks }: MyTasks) => {
         placeholder="search task"
         onChange={handleSearchTask}
       />
-      {tasksState.length > 0 ? (
-        <div className=" custom-scrollbar w-full lg:w-[45%] gap-4 h-full overflow-y-auto p-4 grid grid-cols-1 lg:grid-cols-2  justify-items-center ">
-          {tasksState.map((item: Tasks) => (
-            <TaskPreview
-              createdat={item.createdat}
-              id={item.id}
-              name={item.name}
-              userId={item.userId}
-              key={item.id}
-            />
-          ))}
-        </div>
-      ) : (
+      {tasks.length === 0 ? (
         <p className="text-lg font-quantico">
           Looks like your task list is empty. Let{"'"}s get started —{" "}
           <span
@@ -41,6 +29,22 @@ const MyTasksContainer = ({ tasks }: MyTasks) => {
           </span>
           {""} to add one!
         </p>
+      ) : tasksState.length === 0 ? (
+        <p className="text-lg font-quantico text-muted-foreground italic">
+          No tasks found with that name.
+        </p>
+      ) : (
+        <div className="custom-scrollbar w-full lg:w-[45%] gap-4 h-full overflow-y-auto p-4 grid grid-cols-1 lg:grid-cols-2 justify-items-center">
+          {tasksState.map((item: Tasks) => (
+            <TaskPreview
+              createdat={item.createdat}
+              id={item.id}
+              name={item.name}
+              userId={item.userId}
+              key={item.id}
+            />
+          ))}
+        </div>
       )}
     </div>
   );
