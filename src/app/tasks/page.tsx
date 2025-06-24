@@ -11,7 +11,7 @@ const MyTasksPage = () => {
   if (isError) return <h1>Houve um erro</h1>;
 
   return (
-    <div className="w-full h-screen flex flex-col gap-4 items-center px-4">
+    <div className="w-full h-full flex flex-col gap-4 items-center px-4">
       <PreviousPageButton label="Home" path="/home" />
       <MyTasksContainer tasks={tasksData} />
     </div>

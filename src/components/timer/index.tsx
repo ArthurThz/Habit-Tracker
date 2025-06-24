@@ -1,9 +1,9 @@
-import { useSession } from "next-auth/react";
 import { Button } from "../ui/button";
 import { useTimer } from "@/hooks/useTimer";
+import { useGetUserSession } from "@/hooks/useGetUserSession";
 
 const Timer = ({ taskId }: { taskId: number }) => {
-  const session = useSession();
+  const { user } = useGetUserSession();
   const {
     formatTime,
     isRunning,
@@ -21,7 +21,7 @@ const Timer = ({ taskId }: { taskId: number }) => {
     setTask({
       ...task,
       taskId: taskId,
-      userId: session.data ? Number(session.data?.user.id) : 0,
+      userId: Number(user?.id),
       startTime: getDate(),
       isTaskFinished: false,
     });

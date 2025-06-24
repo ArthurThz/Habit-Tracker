@@ -37,7 +37,7 @@ const DashboardPage = () => {
       false);
 
   return (
-    <div className="w-full min-h-screen h-auto flex flex-col items-center justify-center p-0 lg:p-8 pt-20 lg:pt-44">
+    <div className="w-full h-full flex flex-col items-center justify-center p-0 lg:p-8 ">
       <NavigateButton label="Home" path="/home" />
       <h1 className="text-4xl font-quantico mt-4">Activity Dashboard</h1>
       {userName && (
