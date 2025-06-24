@@ -2,7 +2,6 @@ import { useMutation } from "@tanstack/react-query";
 
 type NewTask = {
   taskName: string;
-  userId: number;
 };
 
 export const useCreateTask = () => {

@@ -9,8 +9,8 @@ const HeroSection = () => {
   const navigate = useRouter();
 
   return (
-    <div className="w-full min-h-screen h-screen">
-      <div className=" h-full lg:h-screen w-full flex lg:flex-row flex-col-reverse gap-8 lg:gap-0 justify-center items-center p-8">
+    <div className="w-full h-full ">
+      <div className=" h-full  w-full flex lg:flex-row flex-col-reverse gap-8 lg:gap-0 justify-center items-center p-8">
         <div className="flex flex-col lg:w-1/2 gap-8 justify-center">
           <h1 className="text-4xl  tracking-tight lg:text-7xl font-bold font-quantico lg:w-2/3">
             Welcome to the <span className="text-green-500">Habit Tracker</span>

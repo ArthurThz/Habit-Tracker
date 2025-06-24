@@ -15,7 +15,7 @@ export const activityDashboardDataSchema = z.object({
   activitiesConcludedByMonth: z.array(
     z.object({
       month: z.string(),
-      tasks: z.union([z.string(), z.number()]),
+      tasks: z.number(),
     })
   ),
   history: z.array(
@@ -24,5 +24,14 @@ export const activityDashboardDataSchema = z.object({
       quantity: z.number(),
     })
   ),
+  frequentTasksByName: z.array(
+    z.object({
+      name: z.string(),
+      count: z.number(),
+    })
+  ),
+  averageTaskDuration: z.object({
+    avgTaskDuration: z.number(),
+  }),
 });
 export type DashboardResponse = z.infer<typeof activityDashboardDataSchema>;

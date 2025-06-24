@@ -38,7 +38,7 @@ const TaskPreview = ({ createdat, id, name }: Tasks) => {
     });
   };
   return (
-    <div className="w-full min-h-[250px] justify-center border hover:border-zinc-50 flex gap-4 flex-col items-center rounded-md border-zinc-800 bg-zinc-900 p-4">
+    <div className="w-full h-[400px] lg:w-[400px] lg:h-[350px] justify-center border hover:border-zinc-50 flex gap-4 flex-col items-center rounded-md border-zinc-800 bg-zinc-900 p-4">
       <h3 className="text-xl font-quantico">{name}</h3>
       <p>Created At: {formatDate(createdat)}</p>
       <Button

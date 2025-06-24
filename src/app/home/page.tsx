@@ -1,14 +1,11 @@
 "use client";
 
 import ContentPreview from "@/components/content-preview";
-import { Button } from "@/components/ui/button";
 import { ChartNoAxesCombined, CirclePlus, LayoutList } from "lucide-react";
-import { signOut } from "next-auth/react";
 
 const HomePage = () => {
   return (
-    <div className="min-h-screen h-full w-full flex flex-col px-2 py-4 items-center lg:justify-center lg:flex-row pt-10 lg:pt-0">
-      <Button onClick={() => signOut({ callbackUrl: "/" })}>Log Out</Button>
+    <div className="h-full w-full flex flex-col px-2 items-center lg:justify-center lg:flex-row ">
       <ContentPreview
         buttonLabel="Add New"
         cardImage="./activity-preview.svg"

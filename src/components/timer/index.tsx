@@ -1,7 +1,9 @@
 import { Button } from "../ui/button";
 import { useTimer } from "@/hooks/useTimer";
+import { useGetUserSession } from "@/hooks/useGetUserSession";
 
 const Timer = ({ taskId }: { taskId: number }) => {
+  const { user } = useGetUserSession();
   const {
     formatTime,
     isRunning,
@@ -19,7 +21,7 @@ const Timer = ({ taskId }: { taskId: number }) => {
     setTask({
       ...task,
       taskId: taskId,
-      userId: 1,
+      userId: Number(user?.id),
       startTime: getDate(),
       isTaskFinished: false,
     });

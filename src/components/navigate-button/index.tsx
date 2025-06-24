@@ -5,14 +5,15 @@ import { ReactNode } from "react";
 type Props = {
   label: string;
   icon?: ReactNode;
+  path: string;
 };
 
-const PreviousPageButton = ({ label, icon }: Props) => {
+const NavigateButton = ({ label, icon, path }: Props) => {
   const navigate = useRouter();
   return (
     <button
-      onClick={() => navigate.back()}
-      className="flex items-center  hover:underline hover:cursor-pointer underline-offset-2"
+      onClick={() => navigate.push(path)}
+      className="flex items-center hover:underline hover:cursor-pointer underline-offset-2"
     >
       {icon ? icon : <ChevronLeft />}
       <span>{label}</span>
@@ -20,4 +21,4 @@ const PreviousPageButton = ({ label, icon }: Props) => {
   );
 };
 
-export default PreviousPageButton;
+export default NavigateButton;
