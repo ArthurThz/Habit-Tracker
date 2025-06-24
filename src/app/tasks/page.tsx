@@ -1,6 +1,6 @@
 "use client";
 import Loader from "@/components/loader";
-import MyTasksContainer from "@/components/my-tasks-container";
+import MyTasksContainer from "@/components/containers/my-tasks-container";
 import PreviousPageButton from "@/components/navigate-button";
 import { useTasks } from "@/hooks/react-query/useTasks";
 

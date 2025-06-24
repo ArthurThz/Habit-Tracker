@@ -1,9 +1,9 @@
 "use client";
 import { Tasks } from "@/types/tasks";
-import TaskPreview from "../task-preview";
-import { Input } from "../ui/input";
 import { MyTasks, useMyTasks } from "@/hooks/useSearchTasks";
 import { useRouter } from "next/navigation";
+import { Input } from "@/components/ui/input";
+import TaskPreview from "@/components/task-preview";
 
 const MyTasksContainer = ({ tasks }: MyTasks) => {
   const router = useRouter();

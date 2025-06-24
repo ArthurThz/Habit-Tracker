@@ -7,7 +7,7 @@ import NextAuthProvider from "@/components/next-auth-provider";
 import { getServerSession } from "next-auth";
 import { authOptions } from "./api/auth/[...nextauth]/route";
 import Header from "@/components/header";
-import AppContainer from "@/components/app-container";
+import AppContainer from "@/components/containers/app-container";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
