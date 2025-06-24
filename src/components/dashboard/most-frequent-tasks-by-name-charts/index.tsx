@@ -25,7 +25,7 @@ type Props = {
 
 const MostFrequentTasksByName = ({ tasks }: Props) => {
   return (
-    <Card className="w-1/2">
+    <Card className="lg:w-1/2">
       <CardHeader>
         <CardTitle>Your most frequent tasks</CardTitle>
         <CardDescription>

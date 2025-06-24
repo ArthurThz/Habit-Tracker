@@ -14,18 +14,18 @@ import {
 } from "@/components/ui/card";
 
 import { useActivityDashboard } from "@/hooks/react-query/useActivityDashboard";
+import { useGetUserSession } from "@/hooks/useGetUserSession";
 import { CircleCheckBig, ClockArrowUp, ListCheck, Timer } from "lucide-react";
-import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 const DashboardPage = () => {
-  const session = useSession();
   const router = useRouter();
+  const { user } = useGetUserSession();
   const { data: activities, isLoading } = useActivityDashboard({
-    userId: Number(session.data?.user.id),
+    userId: Number(user?.id),
   });
 
-  const userName = session.data?.user.name;
+  const userName = user?.name;
 
   if (isLoading) return <Loader />;
 
@@ -69,11 +69,11 @@ const DashboardPage = () => {
             <TasksConcludedByMonthCharts
               data={activities?.activitiesConcludedByMonth ?? []}
             />
-            <div className="w-full h-auto flex gap-4">
+            <div className="w-full h-auto flex flex-col lg:flex-row gap-4">
               <MostFrequentTasksByName
                 tasks={activities?.frequentTasksByName ?? []}
               />
-              <Card className="w-1/2">
+              <Card className="lg:w-1/2">
                 <CardHeader>
                   <CardTitle>Average Time</CardTitle>
                   <CardDescription>
@@ -82,8 +82,8 @@ const DashboardPage = () => {
                 </CardHeader>
                 <CardContent className="flex flex-col gap-4 h-full p-10">
                   <div className="w-full h-full  flex items-center justify-center">
-                    <span className="text-6xl flex gap-4 items-center">
-                      <Timer className="w-[60px] h-[60px] text-green-500" />
+                    <span className=" text-2xl lg:text-6xl flex gap-2 lg:gap-4 items-center">
+                      <Timer className="w-[30px] h-[30px] lg:w-[60px] lg:h-[60px] text-green-500" />
                       {`${activities?.averageTaskDuration.avgTaskDuration} minutes`}
                     </span>
                   </div>

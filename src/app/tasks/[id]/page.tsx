@@ -1,6 +1,6 @@
 "use client";
 import Loader from "@/components/loader";
-import PreviousPageButton from "@/components/previous-page-button";
+import PreviousPageButton from "@/components/navigate-button";
 import Timer from "@/components/timer";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { useTaskById } from "@/hooks/react-query/useTaskById";

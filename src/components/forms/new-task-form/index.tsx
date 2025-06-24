@@ -29,6 +29,7 @@ const NewTaskForm = () => {
   });
 
   const createTask = useCreateTask();
+
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     createTask.mutate(
       { taskName: values.name },
@@ -45,7 +46,10 @@ const NewTaskForm = () => {
     );
   };
   return (
-    <div className="max-w-[350px] max-h-1/2 h-full mt-8">
+    <div className="max-w-[350px] max-h-1/2 flex flex-col gap-4 h-full mt-2">
+      <h1 className="font-quantico text-4xl text-center  ">
+        Fill the form to add a new task
+      </h1>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
