@@ -48,7 +48,9 @@ const Timer = ({ taskId }: { taskId: number }) => {
         <Button onClick={handleStartTimer} disabled={isRunning}>
           Start Task
         </Button>
-        <Button onClick={handleStopTimer}>End Task</Button>
+        <Button onClick={handleStopTimer} disabled={!isRunning}>
+          End Task
+        </Button>
       </div>
       {task.isTaskFinished && (
         <div className="mt-1">
