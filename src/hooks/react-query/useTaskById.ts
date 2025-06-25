@@ -15,6 +15,7 @@ export const useTaskById = ({ id }: { id: number }) => {
 
       try {
         const parsedData = taskByIdSchema.parse(data.data);
+        console.log("TASK BY ID", parsedData);
         return parsedData;
       } catch (error) {
         console.error("❌ Erro ao fazer parse com Zod:", error);

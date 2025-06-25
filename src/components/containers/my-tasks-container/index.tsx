@@ -1,11 +1,14 @@
 "use client";
-import { Tasks } from "@/types/tasks";
-import { MyTasks, useMyTasks } from "@/hooks/useSearchTasks";
+import { useMyTasks } from "@/hooks/useSearchTasks";
 import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import TaskPreview from "@/components/task-preview";
+import { TasksArray } from "@/schemas/tasks-schema";
 
-const MyTasksContainer = ({ tasks }: MyTasks) => {
+type Props = {
+  tasks: TasksArray;
+};
+const MyTasksContainer = ({ tasks }: Props) => {
   const router = useRouter();
 
   const { handleSearchTask, tasksState } = useMyTasks({ tasks });
@@ -35,9 +38,12 @@ const MyTasksContainer = ({ tasks }: MyTasks) => {
         </p>
       ) : (
         <div className="custom-scrollbar w-full lg:w-[45%] gap-4 h-full overflow-y-auto p-4 grid grid-cols-1 lg:grid-cols-2 justify-items-center">
-          {tasksState.map((item: Tasks) => (
+          {tasksState.map((item) => (
             <TaskPreview
-              createdat={item.createdat}
+              createdat={item.createdAt.toLocaleString("en-US", {
+                dateStyle: "medium",
+                timeStyle: "short",
+              })}
               id={item.id}
               name={item.name}
               userId={item.userId}

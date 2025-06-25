@@ -1,13 +1,22 @@
-import { Tasks } from "@/types/tasks";
-import { formatDate } from "@/lib/formatDate";
+// import { formatDate } from "@/lib/formatDate";
 import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
 import { ClockPlus, Trash } from "lucide-react";
 import { useDeleteTask } from "@/hooks/react-query/useDeleteTask";
 import { toast } from "sonner";
 import { useQueryClient } from "@tanstack/react-query";
+import { TasksArray } from "@/schemas/tasks-schema";
 
-const TaskPreview = ({ createdat, id, name }: Tasks) => {
+const TaskPreview = ({
+  createdat,
+  id,
+  name,
+}: {
+  createdat: string;
+  name: string;
+  id: number;
+  userId: number;
+}) => {
   const navigate = useRouter();
 
   const deleteTask = useDeleteTask();
@@ -21,14 +30,11 @@ const TaskPreview = ({ createdat, id, name }: Tasks) => {
   const handleDeleteTask = () => {
     deleteTask.mutate(String(id), {
       onSuccess: () => {
-        queryClient.setQueryData(
-          ["tasks"],
-          (oldTasksArr: Tasks[] | undefined) => {
-            return oldTasksArr
-              ? oldTasksArr.filter((item) => item.id !== id)
-              : [];
-          }
-        );
+        queryClient.setQueryData(["tasks"], (oldTasksArr: TasksArray) => {
+          return oldTasksArr
+            ? oldTasksArr.filter((item) => item.id !== id)
+            : [];
+        });
         queryClient.invalidateQueries({ queryKey: ["tasks"] });
         toast.success("Task removed");
       },
@@ -38,9 +44,11 @@ const TaskPreview = ({ createdat, id, name }: Tasks) => {
     });
   };
   return (
-    <div className="w-full h-[400px] lg:w-[400px] lg:h-[350px] justify-center border hover:border-zinc-50 flex gap-4 flex-col items-center rounded-md border-zinc-800 bg-zinc-900 p-4">
-      <h3 className="text-xl font-quantico">{name}</h3>
-      <p>Created At: {formatDate(createdat)}</p>
+    <div className="w-full h-[400px] lg:w-[400px] lg:h-[350px] group justify-center border hover:border-zinc-50 flex gap-4 flex-col items-center rounded-md border-zinc-800 bg-zinc-900 p-4">
+      <h3 className="text-xl font-quantico group-hover:text-green-500">
+        {name}
+      </h3>
+      <p>Created At: {String(createdat)}</p>
       <Button
         onClick={handleNavigate}
         className="bg-white hover:cursor-pointer min-w-1/2"

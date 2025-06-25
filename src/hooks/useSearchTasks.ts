@@ -1,11 +1,11 @@
-import { Tasks } from "@/types/tasks";
+import { TasksArray } from "@/schemas/tasks-schema";
 import { ChangeEvent, useEffect, useState } from "react";
 
 export type MyTasks = {
-  tasks: Tasks[];
+  tasks: TasksArray;
 };
 export const useMyTasks = ({ tasks }: MyTasks) => {
-  const [tasksState, setTasksState] = useState<Tasks[]>(tasks);
+  const [tasksState, setTasksState] = useState<TasksArray>(tasks);
   const [SearchField, setSearchField] = useState<string>("");
 
   useEffect(() => {

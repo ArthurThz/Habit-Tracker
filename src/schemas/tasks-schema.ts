@@ -6,3 +6,8 @@ export const taskByIdSchema = z.object({
   userId: z.number(),
   createdAt: z.coerce.date(),
 });
+export type Task = z.infer<typeof taskByIdSchema>;
+
+export const tasksSchema = z.array(taskByIdSchema);
+
+export type TasksArray = z.infer<typeof tasksSchema>;

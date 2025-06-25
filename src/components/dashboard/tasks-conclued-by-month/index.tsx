@@ -32,7 +32,7 @@ const TasksConcludedByMonthCharts = ({ data }: Props) => {
               color: "#00c951",
             },
           }}
-          className="min-h-[200px] h-full w-full"
+          className="min-h-[200px] max-h-[400px] h-auto w-full"
         >
           <BarChart accessibilityLayer data={data} height={300} width={200}>
             <CartesianGrid vertical={false} />
