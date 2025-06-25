@@ -3,11 +3,11 @@
 import Image from "next/image";
 import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
-import { signOut } from "next-auth/react";
+import { useGetUserSession } from "@/hooks/useGetUserSession";
 
 const HeroSection = () => {
   const navigate = useRouter();
-
+  const { isAuthenticated } = useGetUserSession();
   return (
     <div className="w-full h-full ">
       <div className=" h-full  w-full flex lg:flex-row flex-col-reverse gap-8 lg:gap-0 justify-center items-center p-8">
@@ -20,13 +20,17 @@ const HeroSection = () => {
           <div className="flex gap-4 justify-center lg:justify-start">
             <Button
               variant="heroPrimary"
-              onClick={() => navigate.push("/auth/login")}
+              onClick={() =>
+                navigate.push(!isAuthenticated ? "/auth/login" : "/home")
+              }
             >
               Access App
             </Button>
             <Button
               variant="heroSecondary"
-              onClick={() => signOut({ callbackUrl: "/auth/signup" })}
+              onClick={() =>
+                navigate.push(!isAuthenticated ? "/auth/signup" : "/home")
+              }
             >
               Sign Up
             </Button>

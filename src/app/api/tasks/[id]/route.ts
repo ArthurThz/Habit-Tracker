@@ -4,20 +4,47 @@ import { authOptions } from "../../auth/[...nextauth]/route";
 import { findTaskById } from "@/lib/db/findTaskById";
 import { deleteTask } from "@/lib/db/deleteTask";
 import { HttpError } from "@/types/http-error";
+import { taskByIdSchema } from "@/schemas/tasks-schema";
 
 export async function GET(request: NextRequest) {
   const id = request.nextUrl.pathname.split("/").pop();
-
   if (!id) {
     return NextResponse.json({ success: false }, { status: 400 });
   }
 
   try {
-    const result = await findTaskById(id);
-    return NextResponse.json({ sucess: true, data: result }, { status: 200 });
+    const rawData = await findTaskById(id);
+
+    if (!rawData || rawData.length === 0) {
+      throw new HttpError("Task data not found", 404);
+    }
+
+    const data = rawData[0];
+
+    const formatedData = {
+      name: data.name,
+      id: data.id,
+      userId: Number(data.user_id),
+      createdAt: new Date(data.createdat),
+    };
+
+    const parsedData = taskByIdSchema.parse(formatedData);
+
+    return NextResponse.json(
+      { sucess: true, data: parsedData },
+      { status: 200 }
+    );
   } catch (error) {
-    console.error(error);
-    return NextResponse.json({ success: false }, { status: 500 });
+    if (error instanceof HttpError) {
+      return NextResponse.json(
+        { success: false, message: error.message },
+        { status: error.status }
+      );
+    }
+    return NextResponse.json(
+      { success: false, message: "Internal server error" },
+      { status: 500 }
+    );
   }
 }
 
