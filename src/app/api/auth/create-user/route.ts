@@ -7,10 +7,6 @@ import { createUserSchema } from "@/schemas/user-schema";
 export async function POST(request: Request) {
   const body = await request.json();
 
-  if (!body) {
-    throw new HttpError("User data is required to signup", 400);
-  }
-
   try {
     const parsedBody = createUserSchema.safeParse(body);
 
@@ -20,7 +16,7 @@ export async function POST(request: Request) {
 
     const { name, password, email } = parsedBody.data;
 
-    const hashedPassword = bcrypt.hashSync(password, 10);
+    const hashedPassword = await bcrypt.hash(password, 10);
 
     const userExists =
       await dbConnection`SELECT email from users WHERE email = ${email} LIMIT 1`;
@@ -32,8 +28,10 @@ export async function POST(request: Request) {
       );
     }
 
+    const formatedEmail = email.trim().toLowerCase();
+
     const result =
-      await dbConnection`INSERT INTO users (name, password, email) VALUES (${name},${hashedPassword},${email})`;
+      await dbConnection`INSERT INTO users (name, password, email) VALUES (${name},${hashedPassword},${formatedEmail})`;
 
     return NextResponse.json({ success: true, data: result }, { status: 201 });
   } catch (err) {

@@ -11,3 +11,7 @@ export type Task = z.infer<typeof taskByIdSchema>;
 export const tasksSchema = z.array(taskByIdSchema);
 
 export type TasksArray = z.infer<typeof tasksSchema>;
+
+export const createTaskSchema = z.object({
+  taskName: z.string(),
+});

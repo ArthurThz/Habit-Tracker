@@ -3,13 +3,17 @@ import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 import { authOptions } from "../auth/[...nextauth]/route";
 import { HttpError } from "@/types/http-error";
-import { tasksSchema } from "@/schemas/tasks-schema";
+import { createTaskSchema, tasksSchema } from "@/schemas/tasks-schema";
 
 export async function GET() {
   const session = await getServerSession(authOptions);
+
   try {
+    if (!session) {
+      throw new HttpError("session not found", 403);
+    }
     const rawData =
-      await dbConnection`SELECT * FROM tasks WHERE user_id = ${session?.user.id}  `;
+      await dbConnection`SELECT * FROM tasks WHERE user_id = ${session.user.id}`;
 
     if (!rawData || rawData.length === 0) {
       throw new HttpError("Tasks data not found!", 404);
@@ -22,7 +26,11 @@ export async function GET() {
       createdAt: new Date(item.createdat),
     }));
 
-    const parsedData = tasksSchema.parse(formatedData);
+    const parsedData = tasksSchema.safeParse(formatedData);
+
+    if (!parsedData.success) {
+      throw new HttpError("Task data format is invalid", 500);
+    }
 
     return NextResponse.json(
       { success: true, data: parsedData },
@@ -40,18 +48,36 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
+  const session = await getServerSession(authOptions);
   const body = await request.json();
 
-  const session = await getServerSession(authOptions);
-  const { taskName } = body;
-
   try {
-    const result =
-      await dbConnection`INSERT INTO tasks (name, user_id) VALUES (${taskName}, ${session?.user.id})`;
+    if (!session) {
+      throw new HttpError("session not found!", 403);
+    }
 
-    return NextResponse.json({ success: true, data: result }, { status: 201 });
+    const parsedBody = createTaskSchema.safeParse(body);
+
+    if (!parsedBody.success) {
+      throw new HttpError("Invalid data type", 400);
+    }
+
+    const { taskName } = parsedBody.data;
+
+    await dbConnection`INSERT INTO tasks (name, user_id) VALUES (${taskName}, ${session.user.id})`;
+
+    return NextResponse.json(
+      { success: true, message: "Task successfully created" },
+      { status: 201 }
+    );
   } catch (err) {
     console.error(err);
+    if (err instanceof HttpError) {
+      return NextResponse.json(
+        { success: false, message: err.message },
+        { status: err.status }
+      );
+    }
     return NextResponse.json({ success: false }, { status: 500 });
   }
 }
