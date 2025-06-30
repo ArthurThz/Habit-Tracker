@@ -6,10 +6,11 @@ import { HttpError } from "@/types/http-error";
 export async function POST(request: Request) {
   const body = await request.json();
 
-  if (!body) {
-    throw new HttpError("Request body is required", 400);
-  }
   try {
+    if (!body) {
+      throw new HttpError("Request body is required", 400);
+    }
+
     const parsedBody = activitySchema.safeParse(body);
 
     if (!parsedBody.success) {
@@ -28,7 +29,7 @@ export async function POST(request: Request) {
       throw new HttpError("Cant save your activity", 400);
     }
 
-    return NextResponse.json({ success: true, data: result }, { status: 201 });
+    return NextResponse.json({ success: true }, { status: 201 });
   } catch (error) {
     if (error instanceof HttpError) {
       return NextResponse.json(
