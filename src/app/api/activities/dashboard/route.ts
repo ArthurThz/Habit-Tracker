@@ -5,8 +5,8 @@ import { activityDashboardDataSchema } from "@/schemas/dashboard-response-schema
 import { getDashboarData } from "@/lib/db/dashboard/getDashboardData";
 import { HttpError } from "@/types/http-error";
 
-export async function GET(request: Request) {
-  const session = await getServerSession({ req: request, ...authOptions });
+export async function GET() {
+  const session = await getServerSession(authOptions);
 
   if (!session) {
     throw new HttpError("No session found", 401);

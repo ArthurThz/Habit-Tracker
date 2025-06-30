@@ -1,14 +1,14 @@
 import { z } from "zod";
 
-export const taskByIdSchema = z.object({
+export const taskSchema = z.object({
   name: z.string(),
   id: z.number(),
   userId: z.number(),
   createdAt: z.coerce.date(),
 });
-export type Task = z.infer<typeof taskByIdSchema>;
+export type Task = z.infer<typeof taskSchema>;
 
-export const tasksSchema = z.array(taskByIdSchema);
+export const tasksSchema = z.array(taskSchema);
 
 export type TasksArray = z.infer<typeof tasksSchema>;
 

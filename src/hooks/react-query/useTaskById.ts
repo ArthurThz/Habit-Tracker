@@ -1,27 +1,11 @@
-import { taskByIdSchema } from "@/schemas/tasks-schema";
+import { fetchAndParse } from "@/lib/fetchAndParse";
+import { taskSchema } from "@/schemas/tasks-schema";
 import { useQuery } from "@tanstack/react-query";
 
 export const useTaskById = ({ id }: { id: number }) => {
   return useQuery({
     queryKey: ["taskById", id],
-    queryFn: async () => {
-      const response = await fetch(`/api/tasks/${id}`);
-
-      if (!response.ok) {
-        throw new Error("An error occurred while fetching your task");
-      }
-
-      const data = await response.json();
-
-      try {
-        const parsedData = taskByIdSchema.parse(data.data);
-        console.log("TASK BY ID", parsedData);
-        return parsedData;
-      } catch (error) {
-        console.error("❌ Erro ao fazer parse com Zod:", error);
-        throw error; // importante para o React Query tratar como erro
-      }
-    },
+    queryFn: () => fetchAndParse(`/api/tasks/${id}`, taskSchema),
     refetchOnWindowFocus: false,
   });
 };

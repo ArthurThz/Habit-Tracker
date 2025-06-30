@@ -8,13 +8,13 @@ import { useParams } from "next/navigation";
 const TaskPage = () => {
   const params = useParams();
   const parsedId = parseInt(params.id as string);
-  const { data: taskById, isLoading } = useTaskById({ id: parsedId });
+  const { data: task, isLoading } = useTaskById({ id: parsedId });
 
   if (isLoading) return <Loader />;
   return (
     <div className="flex items-center justify-center flex-col h-full w-full gap-4 p-4">
-      {taskById ? (
-        <Task id={taskById.id} name={taskById.name} />
+      {task ? (
+        <Task id={task.id} name={task.name} />
       ) : (
         <>
           <NavigateButton label="My Tasks" path="/tasks" />

@@ -15,10 +15,8 @@ export async function fetchAndParse<T>(
 
   const data = await response.json();
 
-  console.log("DATA LIB", data);
   try {
     const parsedData = zodSchema.parse(data.data);
-    console.log("PARSED DATA LIB", parsedData);
     return parsedData;
   } catch (error) {
     console.error("Zod validation error", error);
