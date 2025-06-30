@@ -31,7 +31,7 @@ export async function GET(request: NextRequest) {
     const parsedData = taskByIdSchema.parse(formatedData);
 
     return NextResponse.json(
-      { sucess: true, data: parsedData },
+      { success: true, data: parsedData },
       { status: 200 }
     );
   } catch (error) {
@@ -79,17 +79,17 @@ export async function DELETE(
 
     await deleteTask(taskId);
 
-    return NextResponse.json({ sucess: true }, { status: 200 });
+    return NextResponse.json({ success: true }, { status: 200 });
   } catch (error) {
     if (error instanceof HttpError) {
       console.log(error);
       return NextResponse.json(
-        { sucess: false, message: error.message },
+        { success: false, message: error.message },
         { status: error.status }
       );
     }
     return NextResponse.json(
-      { sucess: false, message: "Internal server error" },
+      { success: false, message: "Internal server error" },
       { status: 500 }
     );
   }

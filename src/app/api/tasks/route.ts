@@ -25,13 +25,13 @@ export async function GET() {
     const parsedData = tasksSchema.parse(formatedData);
 
     return NextResponse.json(
-      { sucess: true, data: parsedData },
+      { success: true, data: parsedData },
       { status: 200 }
     );
   } catch (error) {
     if (error instanceof HttpError) {
       return NextResponse.json(
-        { sucess: false, message: error.message },
+        { success: false, message: error.message },
         { status: error.status }
       );
     }
